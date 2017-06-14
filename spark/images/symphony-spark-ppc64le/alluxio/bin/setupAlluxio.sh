@@ -1,0 +1,10 @@
+#!/bin/bash                                                                                                                                                                                                                            
+# args $1 = spark master                                                                                                                                                                                                               
+# args $2 = glusterfs /ssd/                                                                                                                                                                                                            
+                                                                                                                                                                                                                                       
+${ALLUXIO}/bin/alluxio bootstrapConf $1 glusterfs                                                                                                                                                                                      
+touch ${ALLUXIO}/conf/alluxio-site.properties                                                                                                                                                                                          
+echo "alluxio.underfs.address=$2" >> ${ALLUXIO}/conf/alluxio-site.properties                                                                                                                                                           
+echo "alluxio.keyvalue.partition.size.bytes.max=536870912" >> ${ALLUXIO}/conf/alluxio-site.properties                                                                                                                                  
+echo "alluxio.user.file.writetype.default=CACHE_THROUGH" >> ${ALLUXIO}/conf/alluxio-site.properties                                                                                                                                    
+${ALLUXIO}/bin/alluxio format
